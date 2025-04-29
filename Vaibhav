@@ -1,70 +1,9 @@
-Model
-public class Offer
-{
-    public string Title { get; set; }
-    public string Description { get; set; }
-    public string ImageUrl { get; set; }
-    public string Link { get; set; }
-}
-Controller
-public class OfferController : Controller
-{
-    public ActionResult OfferGrid()
-    {
-        var offers = GetOffersFromSitecore();
-        return View(offers);
-    }
-
-    private List<Offer> GetOffersFromSitecore()
-    {
-        var offers = new List<Offer>();
-        var offerItems = Sitecore.Context.Database.GetItem("/sitecore/content/Offers").Children;
-
-        foreach (var item in offerItems)
-        {
-            var offer = new Offer
-            {
-                Title = item.Fields["Title"].Value,
-                Description = item.Fields["Description"].Value,
-                ImageUrl = Sitecore.Resources.Media.MediaManager.GetMediaUrl(item.Fields["Image"].Value),
-                Link = item.Fields["Link"].Value
-            };
-            offers.Add(offer);
-        }
-
-        return offers;
-    }
-}
-View
-@model List<YourNamespace.Models.Offer>
-
-<div class="offer-grid">
-    @foreach (var offer in Model)
-    {
-        <div class="offer-item">
-            <img src="@offer.ImageUrl" alt="@offer.Title" />
-            <h3>@offer.Title</h3>
-            <p>@offer.Description</p>
-            <a href="@offer.Link">Learn More</a>
-        </div>
-    }
-</div>
-
-<style>
-    .offer-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-        gap: 20px;
-    }
-    .offer-item {
-        border: 1px solid #ccc;
-        padding: 10px;
-        text-align: center;
-    }
-    .offer-item img {
-        max-width: 100%;
-        height: auto;
-    }
-</style>
-
-
+<footer>
+  <div class="social-links">
+    <a href="https://www.instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+    <a href="https://www.facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a>
+    <a href="https://www.twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+    <a href="https://www.youtube.com" target="_blank"><i class="fab fa-youtube"></i></a>
+    <a href="https://www.linkedin.com" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+  </div>
+</footer>
